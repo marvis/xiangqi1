@@ -122,25 +122,23 @@ int main(int argc, char ** argv)
 		for(int i = 0; i < 9; i++)
 		{
 			int w0 = 29;
-			int x1 = x0 + i * x_step - w0;
-			int y1 = y0 + j * y_step - w0;
-			int x2 = x1 + 2*w0;
-			int y2 = y1 + 2*w0;
-			double sumval = sumImageRoi(grayImg, x1, y1, 2*w0+1, 2*w0+1);
+			int x = x0 + i * x_step - w0;
+			int y = y0 + j * y_step - w0;
+			double sumval = sumImageRoi(grayImg, x, y, 2*w0+1, 2*w0+1);
 			cout<<sumval<<" ";
 			if(sumval > 50000)
 			{
-				cvCircle(image, cvPoint(x1+w0,y1+w0), w0, cvScalar(255));
+				IplImage * chessImg = cropImage(image, x, y, 2*w0+1, 2*w0+1);
+				ostringstream oss;
+				oss << filename<< ".pos"<< id++ << ".png";
+				cvSaveImage(oss.str().c_str(), chessImg);
+				cvReleaseImage(&chessImg);
 			}
 		}
 		cout<<endl;
 	}
 	// draw end
 	
-	cvNamedWindow("Orig Image",CV_WINDOW_AUTOSIZE );
-	cvShowImage("Orig Image",image );
-	waitKey(0);
-
 	cvReleaseImage(&image);
 	cvReleaseImage(&bkgImg);
 	cvReleaseImage(&grayImg);
