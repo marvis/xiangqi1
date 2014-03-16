@@ -91,7 +91,7 @@ int main(int argc, char ** argv)
 		return -1;
 	}
 
-	IplImage * bkgImg = cvLoadImage("background.png", 1);
+	IplImage * bkgImg = cvLoadImage("/Users/xiaohang/Test/xiangqi/background.png", 1);
 	if(!bkgImg)
 	{
 		printf( "No background.png in current folder");

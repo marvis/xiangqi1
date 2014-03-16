@@ -16,7 +16,6 @@ IplImage * cropImage(IplImage * src, int x, int y, int width, int height)
     cvResetImageROI(src);
 	return dst;
 }
-
 double bestMatchingScore(IplImage * smallImg, IplImage * bigImg)
 {
 	if(!smallImg || !bigImg) return DOUBLE_INF;
@@ -68,66 +67,6 @@ double bestMatchingScore(IplImage * smallImg, IplImage * bigImg)
 	return min_sum;
 }
 
-double sumImageRoi(IplImage * image, int x, int y, int width, int height)
-{
-	double sum = 0;
-	int nchannels = image->nChannels;
-	for(int j = y; j < y+height; j++)
-	{
-		for(int i = x; i < x+width; i++)
-		{
-			for(int c = 0; c < image->nChannels; c++)
-			{
-				sum += image->imageData[i*nchannels + c + j*image->widthStep];
-			}
-		}
-	}
-	return sum;
-}
-
-IplImage * imageDiff(IplImage * image0, IplImage * image1)
-{
-	if(!image0)
-	{
-		printf( "image0 is invalid\n" );
-		return 0;
-	}
-	if(!image1)
-	{
-		printf( "image1 is invalid\n" );
-		return 0;
-	}
-	if(image0->width != image1->width ||
-			image0->height != image1->height ||
-			image0->nChannels != image1->nChannels)
-	{
-		printf("image0 and image1 have different size");
-		return 0;
-	}
-
-	int width = image0->width;
-	int height = image0->height;
-	int nchannels = image0->nChannels;
-	IplImage * diffImg = cvCreateImage(cvSize(width, height), IPL_DEPTH_8U, nchannels);
-	int widthStep = diffImg->widthStep;
-	for(int j = 0; j < height; j++)
-	{
-		for(int i = 0; i < width; i++)
-		{
-			for(int c = 0; c < nchannels; c++)
-			{
-				int ind = i*nchannels + c + j * widthStep;
-				int val0 = image0->imageData[ind];
-				int val1 = image1->imageData[ind];
-				int diffval = val0 - val1;
-				diffval = (diffval > 0) ? diffval : -diffval;
-				diffImg->imageData[ind] = diffval;
-			}
-		}
-	}
-	return diffImg;
-}
-
 int main(int argc, char ** argv)
 {
 	if(argc != 2)
@@ -143,34 +82,7 @@ int main(int argc, char ** argv)
 		printf( "No image data \n" );
 		return -1;
 	}
-
-	IplImage * bkgImg = cvLoadImage("/Users/xiaohang/Test/xiangqi/background.png", 1);
-	if(!bkgImg)
-	{
-		printf( "No background.png in current folder");
-		return -1;
-	}
-
-	IplImage * image2 = cropImage(image, 4, 149, 534, 666);
-	cvReleaseImage(&image);
-	image = image2;
-
-	IplImage * bkgImg2 = cropImage(bkgImg, 4, 149, 534, 666);
-	cvReleaseImage(&bkgImg);
-	bkgImg = bkgImg2;
-
-	IplImage * diffImg = imageDiff(bkgImg, image);
-	
-	IplImage * grayImg = cvCreateImage(cvSize(diffImg->width, diffImg->height), IPL_DEPTH_8U, 1);
-	cvCvtColor(diffImg,grayImg,CV_BGR2GRAY);
-
-	// draw start
-	double x_step = 59;
-	double y_step = 65.5;
-	
-	int x0 = 29 + 3 * x_step;
-	int y0 = 30;
-	// find red general start
+	image = cropImage(image, 4, 149, 531, 666);
 
 	IplImage * generalImg = cvLoadImage("/Users/xiaohang/Test/xiangqi/red_general.png", 1);
 	if(!generalImg)
@@ -178,6 +90,11 @@ int main(int argc, char ** argv)
 		printf("can't find red_general.png\n");
 		return -1;
 	}
+
+	double x_step = 59;
+	double y_step = 65.5;
+	int x0 = 29 + 3 * x_step;
+	int y0 = 30;
 
 	int positions[18][2] = {
 		{x0, y0}, {x0+x_step, y0}, {x0 + 2*x_step, y0},
@@ -193,7 +110,6 @@ int main(int argc, char ** argv)
 	int min_id = -1;
 	int w0 = 29;
 	int x, y;
-	bool red_is_bot = true;
 	for(int i = 0; i < 18; i++)
 	{
 		x = positions[i][0];
@@ -206,49 +122,17 @@ int main(int argc, char ** argv)
 			min_id = i;
 		}
 	}
-	if(min_id < 9) red_is_bot = false;
-	else red_is_bot = true;
+	if(min_id < 9) cout<<"red is up"<<endl;
+	else cout<<"red is in bottom"<<endl;
+	x = positions[min_id][0];
+	y = positions[min_id][1];
+	cvCircle(image, cvPoint(x,y), 19, cvScalar(255));
 
-	// find red general stop
-	if(red_is_bot)
-	{
-		x0 = 29;
-		y0 = 30;
-	}
-	else
-	{
-		x0 = 31;
-		y0 = 33;
-	}
-	int id = 1;
-	for(int j = 0; j < 10; j++)
-	{
-		for(int i = 0; i < 9; i++)
-		{
-			int w0 = 29;
-			int x = (int)(x0 + i * x_step);
-			int y = (int)(y0 + j * y_step);
-			double sumval = sumImageRoi(grayImg, x - w0, y - w0, 2*w0+1, 2*w0+1);
-			cout<<sumval<<" ";
-			if(sumval > 50000)
-			{
-				//cvCircle(image, cvPoint(x,y), 22, cvScalar(255, 0, 0));
-				//cvCircle(image, cvPoint(x,y), 29, cvScalar(0, 0, 255));
-				int w1 = 19;
-				cvRectangle(image, cvPoint(x-w1,y-w1), cvPoint(x+w1, y+w1), cvScalar(255, 0, 0));
-			}
-		}
-		cout<<endl;
-	}
-	// draw end
-	
 	cvNamedWindow("Orig Image",CV_WINDOW_AUTOSIZE );
 	cvShowImage("Orig Image",image );
 	waitKey(0);
-
 	cvReleaseImage(&image);
-	cvReleaseImage(&bkgImg);
-	cvReleaseImage(&grayImg);
+
 	return 0;
 
 }
