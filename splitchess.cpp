@@ -33,10 +33,10 @@ int main(int argc, char ** argv)
 	}
 
 	// crop start 
-	int x = 0;
-	int y = 146;
-	int width = image->width;
-	int height = 664;
+	int x = 4;
+	int y = 149;
+	int width = 531;
+	int height = 660;
 	IplImage * cropImg = cropImage(image, x, y, width, height);
 	cvReleaseImage(&image);
 	image = cropImg;
@@ -48,8 +48,8 @@ int main(int argc, char ** argv)
 	// convert to gray end
 	
 	// draw start
-	int x0 = 33;
-	int y0 = 32;
+	int x0 = 29;
+	int y0 = 29;
 	int x_step = 59;
 	int y_step = 66;
 	int id = 1;
@@ -57,10 +57,10 @@ int main(int argc, char ** argv)
 	{
 		for(int i = 0; i < 9; i++)
 		{
-			int w = 32;
+			int w = 29;
 			int x = x0 + i * x_step - w;
 			int y = y0 + j * y_step - w;
-			IplImage * chessImg = cropImage(grayImg, x, y, 2*w, 2*w);
+			IplImage * chessImg = cropImage(grayImg, x, y, 2*w+1, 2*w+1);
 			ostringstream oss;
 			oss << filename<< "."<< id++ << ".png";
 			cvSaveImage(oss.str().c_str(), chessImg);

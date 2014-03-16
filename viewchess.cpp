@@ -47,9 +47,9 @@ int main(int argc, char ** argv)
 	}
 
 	// crop start 
-	int x = 0;
-	int y = 148;
-	int width = image->width;
+	int x = 4;
+	int y = 149;
+	int width = 531;
 	int height = 660;
 	IplImage * cropImg = cropImage(image, x, y, width, height);
 	cvReleaseImage(&image);
@@ -67,8 +67,8 @@ int main(int argc, char ** argv)
 	// edge image end
 	
 	// draw start
-	int x0 = 33;
-	int y0 = 30;
+	int x0 = 29;
+	int y0 = 29;
 	int x_step = 59;
 	int y_step = 66;
 	vector<pair<int, int> > templ;
@@ -86,11 +86,11 @@ int main(int argc, char ** argv)
 	{
 		for(int i = 0; i < 9; i++)
 		{
-			int w0 = 30;
+			int w0 = 29;
 			int x1 = x0 + i * x_step - w0;
 			int y1 = y0 + j * y_step - w0;
-			int x2 = x1 + 2*w0;
-			int y2 = y1 + 2*w0;
+			int x2 = x1 + 2*w0+1;
+			int y2 = y1 + 2*w0+1;
 			cvRectangle(grayImg, cvPoint(x1,y1), cvPoint(x2,y2), cvScalar(255));
 
 			/*
@@ -122,12 +122,11 @@ int main(int argc, char ** argv)
 	
 	cvNamedWindow("Orig Image",CV_WINDOW_AUTOSIZE );
 	cvShowImage("Orig Image",grayImg );
-	//cvNamedWindow("Edge Image",CV_WINDOW_AUTOSIZE );
-	//cvShowImage("Edge Image", edgeImg);
+	waitKey(0);
+
 	cvReleaseImage(&image);
 	cvReleaseImage(&edgeImg);
 	cvReleaseImage(&grayImg);
-	waitKey(0);
 	return 0;
 
 }
