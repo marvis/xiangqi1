@@ -163,7 +163,7 @@ double bestMatchingScore(IplImage * smallImg, IplImage * bigImg)
 	int offx = (bwid - swid)/2;
 	int offy = (bhei - shei)/2;
 	double min_sum = -1;
-	for(int dy = -3; dy <= 3; dy++)
+	for(int dy = -2; dy <= 2; dy++)
 	{
 		for(int dx = -2; dx <= 2; dx++)
 		{
@@ -245,11 +245,11 @@ int main(int argc, char ** argv)
 		return -1;
 	}
 
-	IplImage * image2 = cropImage(image, 4, 149, 531, 660);
+	IplImage * image2 = cropImage(image, 4, 149, 534, 666);
 	cvReleaseImage(&image);
 	image = image2;
 
-	IplImage * bkgImg2 = cropImage(bkgImg, 4, 149, 531, 660);
+	IplImage * bkgImg2 = cropImage(bkgImg, 4, 149, 534, 666);
 	cvReleaseImage(&bkgImg);
 	bkgImg = bkgImg2;
 
@@ -259,10 +259,70 @@ int main(int argc, char ** argv)
 	cvCvtColor(diffImg,grayImg,CV_BGR2GRAY);
 
 	// draw start
-	int x0 = 29;
-	int y0 = 29;
-	int x_step = 59;
-	int y_step = 66;
+	double x_step = 59;
+	double y_step = 65.5;
+
+	int x0 = 29 + 3 * x_step;
+	int y0 = 30;
+	
+	// find red general start
+
+	IplImage * generalImg = cvLoadImage("/Users/xiaohang/Test/xiangqi/red_general.png", 1);
+	if(!generalImg)
+	{
+		printf("can't find red_general.png\n");
+		return -1;
+	}
+
+	int positions[18][2] = {
+		{x0, y0}, {x0+x_step, y0}, {x0 + 2*x_step, y0},
+		{x0, (int)(y0+y_step)}, {x0+x_step, (int)(y0+y_step)}, {x0 + 2*x_step, (int)(y0+y_step)},
+		{x0, (int)(y0+2*y_step)}, {x0+x_step, (int)(y0+2*y_step)}, {x0 + 2*x_step, (int)(y0+2*y_step)},
+
+		{x0, (int)(y0+7*y_step)}, {x0+x_step, (int)(y0+7*y_step)}, {x0 + 2*x_step, (int)(y0+7*y_step)},
+		{x0, (int)(y0+8*y_step)}, {x0+x_step, (int)(y0+8*y_step)}, {x0 + 2*x_step, (int)(y0+8*y_step)},
+		{x0, (int)(y0+9*y_step)}, {x0+x_step, (int)(y0+9*y_step)}, {x0 + 2*x_step, (int)(y0+9*y_step)}
+	};
+
+	double min_score = -1;
+	int min_id = -1;
+	int w0 = 29;
+	int x, y;
+	bool red_is_bot = true;
+	for(int i = 0; i < 18; i++)
+	{
+		x = positions[i][0];
+		y = positions[i][1];
+		IplImage * chessImg = cropImage(image, x - w0, y - w0, 2*w0+1, 2*w0+1);
+		double score = bestMatchingScore(generalImg, chessImg);
+		if(min_score == -1 || score < min_score)
+		{
+			min_score = score;
+			min_id = i;
+		}
+	}
+	if(min_id < 9) 
+	{
+		red_is_bot = false;
+		cout<<"red is up"<<endl;
+	}
+	else 
+	{
+		cout<<"red is bot"<<endl;
+		red_is_bot = true;
+	}
+
+	// find red general stop
+	if(red_is_bot)
+	{
+		x0 = 29;
+		y0 = 30;
+	}
+	else
+	{
+		x0 = 31;
+		y0 = 33;
+	}
 	int id = 1;
 
 	//the font variable    

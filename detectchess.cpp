@@ -38,7 +38,7 @@ double bestMatchingScore(IplImage * smallImg, IplImage * bigImg)
 	int offx = (bwid - swid)/2;
 	int offy = (bhei - shei)/2;
 	double min_sum = -1;
-	for(int dy = -3; dy <= 3; dy++)
+	for(int dy = -2; dy <= 2; dy++)
 	{
 		for(int dx = -2; dx <= 2; dx++)
 		{
@@ -206,8 +206,16 @@ int main(int argc, char ** argv)
 			min_id = i;
 		}
 	}
-	if(min_id < 9) red_is_bot = false;
-	else red_is_bot = true;
+	if(min_id < 9) 
+	{
+		red_is_bot = false;
+		cout<<"red is up"<<endl;
+	}
+	else 
+	{
+		cout<<"red is bot"<<endl;
+		red_is_bot = true;
+	}
 
 	// find red general stop
 	if(red_is_bot)
