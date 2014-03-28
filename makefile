@@ -1,5 +1,5 @@
 all:
-	g++ -o bin/recognizechess recognizechess.cpp `pkg-config --cflags --libs opencv`
+	g++ -o bin/xiangqi xiangqi.cpp `pkg-config --cflags --libs opencv`
 	#g++ -o bin/savechess savechess.cpp `pkg-config --cflags --libs opencv`
 	#g++ -o bin/detectchess detectchess.cpp `pkg-config --cflags --libs opencv`
 	#g++ -o bin/findRedGeneral findRedGeneral.cpp `pkg-config --cflags --libs opencv`

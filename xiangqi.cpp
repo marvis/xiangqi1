@@ -65,7 +65,8 @@ bool initTemplChesses()
 			return false;
 		}
 		//cvSmooth(templChesses[i], templChesses[i], CV_GAUSSIAN, 3,3,0,0);
-		IplImage * hlfImg = cvCreateImage(cvSize(hlfwid, hlfhei), IPL_DEPTH_8U, nchannels);
+		// 缩小图像大小, 达到平滑的作用, 同时加快速度
+		IplImage * hlfImg = cvCreateImage(cvSize(hlfwid, hlfhei), IPL_DEPTH_8U, nchannels); 
 		cvResize(templChesses[i], hlfImg);
 		cvReleaseImage(&templChesses[i]);
 		templChesses[i] = hlfImg;
