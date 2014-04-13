@@ -21,23 +21,23 @@ bool initTemplChesses()
 {
 	templChesses = new IplImage * [15];
 	int id = 0;
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/xiangqi_black_che.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/xiangqi_black_ma.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/xiangqi_black_xiang.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/xiangqi_black_shi.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/xiangqi_black_jiang.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/xiangqi_black_pao.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/xiangqi_black_zu.png", 1);
+	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_black_che.png", 1);
+	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_black_ma.png", 1);
+	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_black_xiang.png", 1);
+	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_black_shi.png", 1);
+	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_black_jiang.png", 1);
+	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_black_pao.png", 1);
+	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_black_zu.png", 1);
 
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/xiangqi_red_che.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/xiangqi_red_ma.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/xiangqi_red_xiang.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/xiangqi_red_shi.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/xiangqi_red_jiang.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/xiangqi_red_pao.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/xiangqi_red_zu.png", 1);
+	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_red_che.png", 1);
+	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_red_ma.png", 1);
+	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_red_xiang.png", 1);
+	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_red_shi.png", 1);
+	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_red_jiang.png", 1);
+	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_red_pao.png", 1);
+	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_red_zu.png", 1);
 
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/xiangqi_blank.png", 1);
+	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_blank.png", 1);
 
 	bool isok = true;
 	for(int i = 0; i < 15; i++)
@@ -239,11 +239,19 @@ int main(int argc, char ** argv)
 		return -1;
 	}
 
-	IplImage * bkgImg = cvLoadImage("/Users/xiaohang/Test/xiangqi/background.png", 1);
+	IplImage * bkgImg = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/background.png", 1);
 	if(!bkgImg)
 	{
 		printf( "No background.png in current folder");
 		return -1;
+	}
+
+	if(image->width != 540 || image->height != 960)
+	{
+		IplImage * image1 = cvCreateImage(cvSize(540, 960), IPL_DEPTH_8U, 3);
+		cvResize(image, image1);
+		cvReleaseImage(&image);
+		image = image1;
 	}
 
 	IplImage * image2 = cropImage(image, 4, 149, 534, 666);
@@ -268,7 +276,7 @@ int main(int argc, char ** argv)
 	
 	// find red general start
 
-	IplImage * generalImg = cvLoadImage("/Users/xiaohang/Test/xiangqi/red_general.png", 1);
+	IplImage * generalImg = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/red_general.png", 1);
 	if(!generalImg)
 	{
 		printf("can't find red_general.png\n");
