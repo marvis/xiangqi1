@@ -254,7 +254,7 @@ ChessType whichChess(IplImage * image)
 }
 int main(int argc, char ** argv)
 {
-	if(argc != 2)
+	if(argc < 2)
 	{
 		printf("No image data \n");
 		return -1;
@@ -398,6 +398,16 @@ int main(int argc, char ** argv)
 				ChessType type = whichChess(chessImg);
 				chessmatrix[j][i] = fennames[type];
 				//cout<<chessnames[type]<<" ";
+
+				string showMsg = chessnames[type];
+				showMsg = showMsg.substr(1,1);
+				if(type == 14) showMsg = "E";
+				// cvPoint 为起笔的x，y坐标   
+				if(type < 7)
+					cvPutText(image,showMsg.c_str(),cvPoint(x-w0,y),&font,CV_RGB(0,0,255));//在图片中输出字符
+				else
+					cvPutText(image,showMsg.c_str(),cvPoint(x-w0,y),&font,CV_RGB(255,0,0));//在图片中输出字符
+
 			}
 			else
 			{
@@ -406,6 +416,10 @@ int main(int argc, char ** argv)
 			}
 		}
 		//cout<<endl;
+	}
+	if(argc > 2)
+	{
+		cvSaveImage(argv[2], image);
 	}
 	string fenstr = matrix2fenstr(chessmatrix);
 	cout<<fenstr<<endl;
