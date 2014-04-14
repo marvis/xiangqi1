@@ -214,9 +214,9 @@ double bestMatchingScore(IplImage * smallImg, IplImage * bigImg)
 
 					for(int c = 0; c < nchannels; c++)
 					{
-						int sind = sx * nchannels + c + sy * smallImg->widthStep;
-						int bind = bx * nchannels + c + by * bigImg->widthStep;
-						int diff = (int)(bigImg->imageData[bind]) - (int)(smallImg->imageData[sind]);
+						int bval = CV_IMAGE_ELEM(bigImg, unsigned char, by, bx*nchannels + c);
+						int sval = CV_IMAGE_ELEM(smallImg, unsigned char, sy, sx*nchannels + c);
+						int diff = bval - sval;
 						if(diff < 0 ) diff = -diff;
 						sum += diff;
 					}

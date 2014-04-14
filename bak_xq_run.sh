@@ -1,7 +1,27 @@
 # step1: check the start fenstr
-mycolor=$1
+me_first="rnbakabnr/9/1c5c1/p1p1p1p1p/9/9/P1P1P1P1P/1C5C1/9/RNBAKABNR"
+other_first="RNBAKABNR/9/1C5C1/P1P1P1P1P/9/9/p1p1p1p1p/1c5c1/9/rnbakabnr"
+mycolor="w"
 pre_stauts=""
-fid=1
+while [ 1 ]
+do
+	#adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > screen.png
+	adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./
+	fenstr=`xq_recog_cmd screen.png`
+	echo $fenstr
+	if [ "$fenstr" == "$me_first" ]; then
+		mycolor="w"
+		pre_fenstr=""
+		break
+	fi
+	if [ "$fenstr" == "$other_first" ]; then
+		mycolor="b"
+		pre_fenstr="$fenstr"
+		break
+	fi
+	sleep 1
+done
+
 echo "=== start move ==="
 
 #step2: start play
@@ -10,14 +30,15 @@ while [ 1 ]
 do
 	#adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > screen.png
 	adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./
-	fenstr=`xq_recog_cmd screen.png $fid.png`; fid=$[fid+1]
+	fenstr=`xq_recog_cmd screen.png`
 	echo $fenstr
+	
 	if [ "$fenstr" == "$pre_fenstr" ]; then
 		continue
 		sleep 1
 	fi
-
-	isvalid=`./isfenvalid "$prev_fenstr" "$fenstr"`
+	
+	isvalid=`./isfenvalid $prev_fenstr $fenstr`
 	if [ "$isvalid" == "false" ]; then 
 		echo "invalid fenstr"
 		continue; 
@@ -25,7 +46,7 @@ do
 
 	./fenstr2matrix $fenstr
 	nextmove=`node xqwizard_interface/xqcli.js -v -f "$fenstr $mycolor"`
-	#echo $nextmove
+	echo $nextmove
 
 	x0=`echo "$nextmove" | awk '{print $1}'`
 	y0=`echo "$nextmove" | awk '{print $2}'`
@@ -38,9 +59,7 @@ do
 	#adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > screen.png
 	sleep 0.1
 	adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./
-	prev_fenstr2=`xq_recog_cmd screen.png $fid.png`; fid=$[fid+1]
-	echo "prev_fenstr1: $prev_fenstr1"
-	echo "prev_fenstr2: $prev_fenstr2"
+	prev_fenstr2=`xq_recog_cmd screen.png`
 	if [ "$prev_fenstr1" != "$prev_fenstr2" ]; then
 		echo "invalid move"
 	fi
