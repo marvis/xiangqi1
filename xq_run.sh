@@ -1,26 +1,34 @@
 # step1: check the start fenstr
 rm *.png
-mycolor=$1
-pre_stauts=""
-fid=1
+adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./ >> /dev/null 2>&1
+result=`xq_recog_cmd screen.png out.png`;
+fenstr=`echo $result | awk '{print $1}'`
+mycolor=`echo $result | awk '{print $2}'`
+whonext=`echo $result | awk '{print $3}'`
+if [ $mycolor == $whonext ]; then
+	pre_fenstr=""
+else
+	pre_fenstr=$fenstr
+fi
+
 failcount=0
 #echo "=== start move ==="
 
 #step2: start play
-pre_fenstr=""
 while [ 1 ]
 do
 	adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./ >> /dev/null 2>&1
-	fenstr=`xq_recog_cmd screen.png $fid.png`; fid=$[fid+1]
+	result=`xq_recog_cmd screen.png out.png`;
+	fenstr=`echo $result | awk '{print $1}'`
 	if [ "$fenstr" == "$prev_fenstr" ]; then
-		#echo -n -e ".."
+		#echo "对方没有动作"
 		sleep 0.2
 		continue
 	fi
 
 	isvalid1=`./isfenvalid $fenstr`
 	if [ "$isvalid1" == "false" ]; then 
-		#echo "invalid fenstr"
+		echo "不合法的棋谱"
 		sleep 0.2
 		failcount=$[failcount+1]
 		if [ $failcount -ge 10 ]; then break; fi
@@ -29,13 +37,12 @@ do
 
 	isvalid2=`./isfenvalid $prev_fenstr $fenstr`
 	if [ "$isvalid2" == "false" ]; then
-		#echo "invalid fenstr from prev_fenstr"
+		echo "不合法的走法"
 		sleep 0.2
 		failcount=$[failcount+1]
 		if [ $failcount -ge 10 ]; then break; fi
 		continue;
 	fi
-	#echo ""
 	failcount=0
 
 	clear
