@@ -1,7 +1,8 @@
 # step1: check the start fenstr
 rm *.png
+fid=1
 adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./ >> /dev/null 2>&1
-result=`xq_recog_cmd screen.png out.png`;
+result=`xq_recog_cmd screen.png $fid.png`; fid=$[fid+1];
 fenstr=`echo $result | awk '{print $1}'`
 mycolor=`echo $result | awk '{print $2}'`
 whonext=`echo $result | awk '{print $3}'`
@@ -18,7 +19,7 @@ failcount=0
 while [ 1 ]
 do
 	adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./ >> /dev/null 2>&1
-	result=`xq_recog_cmd screen.png out.png`;
+	result=`xq_recog_cmd screen.png $fid.png`; fid=$[fid+1];
 	fenstr=`echo $result | awk '{print $1}'`
 	if [ "$fenstr" == "$prev_fenstr" ]; then
 		#echo "对方没有动作"
@@ -31,7 +32,7 @@ do
 		echo "不合法的棋谱"
 		sleep 0.2
 		failcount=$[failcount+1]
-		if [ $failcount -ge 10 ]; then break; fi
+		if [ $failcount -ge 3 ]; then break; fi
 		continue; 
 	fi
 
@@ -40,7 +41,7 @@ do
 		echo "不合法的走法"
 		sleep 0.2
 		failcount=$[failcount+1]
-		if [ $failcount -ge 10 ]; then break; fi
+		if [ $failcount -ge 3 ]; then break; fi
 		continue;
 	fi
 	failcount=0
