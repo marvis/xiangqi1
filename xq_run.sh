@@ -1,5 +1,5 @@
 # step1: check the start fenstr
-rm *.png
+#rm *.png
 fid=1
 adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./ >> /dev/null 2>&1
 result=`xq_recog_cmd screen.png $fid.png`; fid=$[fid+1];
