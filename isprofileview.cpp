@@ -4,11 +4,11 @@
 
 using namespace std;
 using namespace cv;
-IplImage * tmpl_prepareImage = 0;
+IplImage * tmpl_profileImage = 0;
 
 void init()
 {
-	tmpl_prepareImage = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/view_prepare.png", 1);
+	tmpl_profileImage = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/view_profile.png", 1);
 }
 
 IplImage * cropImage(IplImage * src, int x, int y, int width, int height)
@@ -29,28 +29,28 @@ int main(int argc, char ** argv)
 	}
 	init();
 	IplImage * image = cvLoadImage(argv[1], 1);
-	IplImage * prepareImage = cropImage(image, 288, 803, 150, 89);
-	assert(prepareImage->width == tmpl_prepareImage->width && prepareImage->height == tmpl_prepareImage->height);
+	IplImage * profileImage = cropImage(image, 245, 343, 39, 116);
+	assert(profileImage->width == tmpl_profileImage->width && profileImage->height == tmpl_profileImage->height);
 	double sumdiff = 0.0;
-	int width = prepareImage->width;
-	int height = prepareImage->height;
-	int nchannels = prepareImage->nChannels;
+	int width = profileImage->width;
+	int height = profileImage->height;
+	int nchannels = profileImage->nChannels;
 	for(int j = 0; j < height; j++)
 	{
 		for(int i = 0; i < width; i++)
 		{
 			for(int c = 0; c < nchannels; c++)
 			{
-				int val1 = CV_IMAGE_ELEM(prepareImage, unsigned char, j, i*nchannels + c);
-				int val2 = CV_IMAGE_ELEM(tmpl_prepareImage, unsigned char, j, i*nchannels + c);
+				int val1 = CV_IMAGE_ELEM(profileImage, unsigned char, j, i*nchannels + c);
+				int val2 = CV_IMAGE_ELEM(tmpl_profileImage, unsigned char, j, i*nchannels + c);
 				sumdiff += fabs(val1-val2);
 			}
 		}
 	}
 	double avgdiff = sumdiff/(width*height);
-	//cerr<<"prepareview avgdiff = "<<avgdiff<<endl;
+	//cerr<<"profileview avgdiff = "<<avgdiff<<endl;
 	if(avgdiff < 5) cout<<"true"<<endl;
 	else cout<<"false"<<endl;
 	cvReleaseImage(&image);
-	cvReleaseImage(&prepareImage);
+	cvReleaseImage(&profileImage);
 }

@@ -11,26 +11,37 @@ do
 	if [ $isstart == "true" ]; then
 		echo "start view"
 		cp ./screen.png ./screen${fid}_start.png; fid=$[fid+1]
-		while [ 1 ]
-		do
-			isprepare=`./isprepareview ./screen.png`
-			if [ $isprepare == "true" ]; then 
-				echo "prepared"
-				cp ./screen.png ./screen${fid}_prepare.png; fid=$[fid+1]
-				./adb/touch.sh 546 720
-				sleep 1
-				echo "start play1"
-				./xq_run.sh
-				break
-			else
-				echo "not prepared"
-				cp ./screen.png ./screen${fid}_notprepare.png; fid=$[fid+1]
-				./adb/touch.sh 194 720
-				sleep 1
-			fi
-			adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./ >> /dev/null 2>&1
-		done
+		
+		isnonoccupy=`./isnonoccupyview ./screen.png`
+		if [ $isnonoccupy == "true" ]; then
+			cp ./screen.png ./screen${fid}_nonoccupy.png; fid=$[fid+1]
+			./adb/touch.sh 194 720
+			sleep 1
+			continue
+		fi
 
+		# touch the profile image
+		./adb/touch.sh 363 108
+		sleep 0.1
+
+		adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./ >> /dev/null 2>&1
+		isprofile=`./isprofileview ./screen.png`
+		if [ $isprofile == "true" ]; then
+			echo "profile view"
+			cp ./screen.png ./screen${fid}_profile.png; fid=$[fid+1]
+			./adb/touch.sh 531 126
+			sleep 0.1
+		else
+			continue
+		fi
+		level=`./whichlevel ./screen.png`
+		echo "level = $level"
+		cp ./screen.png ./screen${fid}_level$level.png; fid=$[fid+1]
+		if [ $level -le 4 ]; then
+			# touch start
+			./adb/touch.sh 546 720
+			sleep 1
+		fi
 		continue
 	fi
 
@@ -52,18 +63,28 @@ do
 		continue
 	fi
 
-	isplay=`./isplayview ./screen.png`
-	if [ $isplay == "true" ]; then
-		echo "start play2"
-		cp ./screen.png ./screen${fid}_play.png; fid=$[fid+1]
-		./xq_run.sh
-		continue
-	fi
 	isenter=`./isenterview ./screen.png`
 	if [ $isenter == "true" ]; then
 		echo "enter view"
 		cp ./screen.png ./screen${fid}_enter.png; fid=$[fid+1]
 		sleep 1
+		continue
+	fi
+
+	isprepare=`./isprepareview ./screen.png`
+	if [ $isprepare == "true" ]; then
+		echo "prepare view"
+		cp ./screen.png ./screen${fid}_prepare.png; fid=$[fid+1]
+		sleep 1
+		continue
+	fi
+	
+	# isplay should be the last checked
+	isplay=`./isplayview ./screen.png`
+	if [ $isplay == "true" ]; then
+		echo "start play2"
+		cp ./screen.png ./screen${fid}_play.png; fid=$[fid+1]
+		./xq_run.sh
 		continue
 	fi
 	echo "unknown view"
