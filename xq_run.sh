@@ -46,7 +46,7 @@ do
 	fi
 	failcount=0
 
-	clear
+	#clear
 	echo "-------------------------------"
 	./fenstr2matrix.sh $fenstr `./whichmoves $prev_fenstr $fenstr`
 	echo "-------------------------------"
@@ -69,7 +69,7 @@ do
 		break
 	fi
 
-	clear
+	#clear
 	echo "-------------------------------"
 	./fenstr2matrix.sh $prev_fenstr `./whichmoves $fenstr $prev_fenstr`
 	echo "-------------------------------"

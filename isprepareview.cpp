@@ -29,7 +29,7 @@ int main(int argc, char ** argv)
 	}
 	init();
 	IplImage * image = cvLoadImage(argv[1], 1);
-	IplImage * prepareImage = cropImage(image, 287, 804, 147, 83);
+	IplImage * prepareImage = cropImage(image, 284, 371, 154, 83);
 	assert(prepareImage->width == tmpl_prepareImage->width && prepareImage->height == tmpl_prepareImage->height);
 	double sumdiff = 0.0;
 	int width = prepareImage->width;
@@ -48,7 +48,7 @@ int main(int argc, char ** argv)
 		}
 	}
 	double avgdiff = sumdiff/(width*height);
-	cerr<<"prepareview avgdiff = "<<avgdiff<<endl;
+	//cerr<<"prepareview avgdiff = "<<avgdiff<<endl;
 	if(avgdiff < 5) cout<<"true"<<endl;
 	else cout<<"false"<<endl;
 	cvReleaseImage(&image);

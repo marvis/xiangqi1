@@ -1,3 +1,4 @@
+rm *.png
 fid=1
 start_time=`date "+%s"`
 while [ 1 ]
@@ -10,22 +11,26 @@ do
 	if [ $isstart == "true" ]; then
 		echo "start view"
 		cp ./screen.png ./screen${fid}_start.png; fid=$[fid+1]
-		./adb/touch.sh 546 720
-		sleep 1
 		while [ 1 ]
 		do
-			adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./ >> /dev/null 2>&1
 			isprepare=`./isprepareview ./screen.png`
-			if [ $isprepare == "false" ]; then 
-				echo "not prepare view"
-				break; 
-			else
-				echo "prepare view"
+			if [ $isprepare == "true" ]; then 
+				echo "prepared"
 				cp ./screen.png ./screen${fid}_prepare.png; fid=$[fid+1]
+				./adb/touch.sh 546 720
+				sleep 1
+				echo "start play1"
+				./xq_run.sh
+				break
+			else
+				echo "not prepared"
+				cp ./screen.png ./screen${fid}_notprepare.png; fid=$[fid+1]
+				./adb/touch.sh 194 720
+				sleep 1
 			fi
+			adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./ >> /dev/null 2>&1
 		done
-		echo "start play1"
-		./xq_run.sh
+
 		continue
 	fi
 
@@ -50,7 +55,15 @@ do
 	isplay=`./isplayview ./screen.png`
 	if [ $isplay == "true" ]; then
 		echo "start play2"
+		cp ./screen.png ./screen${fid}_play.png; fid=$[fid+1]
 		./xq_run.sh
+		continue
+	fi
+	isenter=`./isenterview ./screen.png`
+	if [ $isenter == "true" ]; then
+		echo "enter view"
+		cp ./screen.png ./screen${fid}_enter.png; fid=$[fid+1]
+		sleep 1
 		continue
 	fi
 	echo "unknown view"
