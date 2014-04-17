@@ -32,7 +32,7 @@ do
 		echo "不合法的棋谱"
 		sleep 0.2
 		failcount=$[failcount+1]
-		if [ $failcount -ge 3 ]; then break; fi
+		if [ $failcount -ge 4 ]; then break; fi
 		continue; 
 	fi
 
@@ -41,7 +41,7 @@ do
 		echo "不合法的走法"
 		sleep 0.2
 		failcount=$[failcount+1]
-		if [ $failcount -ge 3 ]; then break; fi
+		if [ $failcount -ge 4 ]; then break; fi
 		continue;
 	fi
 	failcount=0
