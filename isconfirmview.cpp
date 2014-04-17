@@ -8,7 +8,7 @@ IplImage * tmpl_confirmImage = 0;
 
 void init()
 {
-	tmpl_confirmImage = cvLoadImage(XQTMPLPATH("view_confirm.png"), 1);
+	tmpl_confirmImage = cvLoadImage(XQTMPLPATH"view_confirm.png", 1);
 }
 
 IplImage * cropImage(IplImage * src, int x, int y, int width, int height)

@@ -9,7 +9,7 @@ IplImage * tmpl_changingtableImage = 0;
 
 void init()
 {
-	tmpl_changingtableImage = cvLoadImage(XQTMPLPATH("view_changingtable.png"), 1);
+	tmpl_changingtableImage = cvLoadImage(XQTMPLPATH"view_changingtable.png", 1);
 }
 
 IplImage * cropImage(IplImage * src, int x, int y, int width, int height)

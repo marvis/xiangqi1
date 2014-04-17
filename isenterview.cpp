@@ -8,7 +8,7 @@ IplImage * tmpl_enterImage = 0;
 
 void init()
 {
-	tmpl_enterImage = cvLoadImage(XQTMPLPATH("view_enter.png"), 1);
+	tmpl_enterImage = cvLoadImage(XQTMPLPATH"view_enter.png", 1);
 }
 
 IplImage * cropImage(IplImage * src, int x, int y, int width, int height)

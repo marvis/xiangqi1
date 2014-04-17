@@ -9,7 +9,7 @@ IplImage * tmpl_selectImage = 0;
 
 void init()
 {
-	tmpl_selectImage = cvLoadImage(XQTMPLPATH("view_select.png"), 1);
+	tmpl_selectImage = cvLoadImage(XQTMPLPATH"view_select.png", 1);
 }
 
 IplImage * cropImage(IplImage * src, int x, int y, int width, int height)

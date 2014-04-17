@@ -1,4 +1,4 @@
-rm *.png
+#rm *.png
 fid=1
 start_time=`date "+%s"`
 while [ 1 ]
@@ -8,12 +8,12 @@ do
 	#rm screen.png
 	adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./ >> /dev/null 2>&1
 	isstart=`./isstartview ./screen.png`
-	if [ $isstart == "true" ]; then
+	if [ "$isstart" == "true" ]; then
 		echo "start view"
 		cp ./screen.png ./screen${fid}_start.png; fid=$[fid+1]
 		
 		isnonoccupy=`./isnonoccupyview ./screen.png`
-		if [ $isnonoccupy == "true" ]; then
+		if [ "$isnonoccupy" == "true" ]; then
 			echo "nonoccupy"
 			cp ./screen.png ./screen${fid}_nonoccupy.png; fid=$[fid+1]
 			./adb/touch.sh 194 720
@@ -27,7 +27,7 @@ do
 
 		adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./ >> /dev/null 2>&1
 		isprofile=`./isprofileview ./screen.png`
-		if [ $isprofile == "true" ]; then
+		if [ "$isprofile" == "true" ]; then
 			echo "profile view"
 			cp ./screen.png ./screen${fid}_profile.png; fid=$[fid+1]
 			./adb/touch.sh 531 126
@@ -39,7 +39,7 @@ do
 		level=`./whichlevel ./screen.png`
 		echo "level = $level"
 		cp ./screen.png ./screen${fid}_level$level.png; fid=$[fid+1]
-		if [ $level -le 4 ]; then
+		if [ "$level" -le 4 ]; then
 			# touch start
 			./adb/touch.sh 546 720
 			sleep 1
@@ -52,7 +52,7 @@ do
 	fi
 
 	isselect=`./isselectview ./screen.png`
-	if [ $isselect == "true" ]; then
+	if [ "$isselect" == "true" ]; then
 		echo "select view"
 		cp ./screen.png ./screen${fid}_select.png; fid=$[fid+1]
 		./adb/touch.sh 357 513
@@ -61,7 +61,7 @@ do
 	fi
 
 	islogin=`./isloginview ./screen.png`
-	if [ $islogin == "true" ]; then
+	if [ "$islogin" == "true" ]; then
 		echo "login view"
 		cp ./screen.png ./screen${fid}_login.png; fid=$[fid+1]
 		./adb/touch.sh 375 879
@@ -70,7 +70,7 @@ do
 	fi
 
 	isback=`./isbackview ./screen.png`
-	if [ $isback == "true" ]; then
+	if [ "$isback" == "true" ]; then
 		echo "back view"
 		cp ./screen.png ./screen${fid}_back.png; fid=$[fid+1]
 		./adb/touch.sh 310 728
@@ -79,7 +79,7 @@ do
 	fi
 
 	isconfirm=`./isconfirmview ./screen.png`
-	if [ $isconfirm == "true" ]; then
+	if [ "$isconfirm" == "true" ]; then
 		echo "confirm view"
 		cp ./screen.png ./screen${fid}_confirm.png; fid=$[fid+1]
 		./adb/touch.sh 355 776
@@ -87,7 +87,7 @@ do
 		continue
 	fi
 	isneterror=`./isneterrorview ./screen.png`
-	if [ $isneterror == "true" ]; then
+	if [ "$isneterror" == "true" ]; then
 		echo "neterror view"
 		cp ./screen.png ./screen${fid}_neterror.png; fid=$[fid+1]
 		./adb/touch.sh 352 778
@@ -96,7 +96,7 @@ do
 	fi
 
 	isenter=`./isenterview ./screen.png`
-	if [ $isenter == "true" ]; then
+	if [ "$isenter" == "true" ]; then
 		echo "enter view"
 		cp ./screen.png ./screen${fid}_enter.png; fid=$[fid+1]
 		sleep 1
@@ -104,7 +104,7 @@ do
 	fi
 
 	isprepare=`./isprepareview ./screen.png`
-	if [ $isprepare == "true" ]; then
+	if [ "$isprepare" == "true" ]; then
 		echo "prepare view"
 		cp ./screen.png ./screen${fid}_prepare.png; fid=$[fid+1]
 		sleep 1
@@ -121,7 +121,7 @@ do
 	
 	# isplay should be the last checked
 	isplay=`./isplayview ./screen.png`
-	if [ $isplay == "true" ]; then
+	if [ "$isplay" == "true" ]; then
 		echo "start play2"
 		cp ./screen.png ./screen${fid}_play.png; fid=$[fid+1]
 		./xq_run.sh

@@ -9,7 +9,7 @@ IplImage * tmpl_loginImage = 0;
 
 void init()
 {
-	tmpl_loginImage = cvLoadImage(XQTMPLPATH("view_login.png"), 1);
+	tmpl_loginImage = cvLoadImage(XQTMPLPATH"view_login.png", 1);
 }
 
 IplImage * cropImage(IplImage * src, int x, int y, int width, int height)

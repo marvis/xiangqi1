@@ -9,7 +9,7 @@ IplImage * tmpl_neterrorImage = 0;
 
 void init()
 {
-	tmpl_neterrorImage = cvLoadImage(XQTMPLPATH("view_neterror.png"), 1);
+	tmpl_neterrorImage = cvLoadImage(XQTMPLPATH"view_neterror.png", 1);
 }
 
 IplImage * cropImage(IplImage * src, int x, int y, int width, int height)

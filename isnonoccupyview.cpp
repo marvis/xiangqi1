@@ -9,7 +9,7 @@ IplImage * tmpl_nonoccupyImage = 0;
 
 void init()
 {
-	tmpl_nonoccupyImage = cvLoadImage(XQTMPLPATH("view_nonoccupy.png"), 1);
+	tmpl_nonoccupyImage = cvLoadImage(XQTMPLPATH"view_nonoccupy.png", 1);
 }
 
 IplImage * cropImage(IplImage * src, int x, int y, int width, int height)

@@ -8,7 +8,7 @@ IplImage * tmpl_profileImage = 0;
 
 void init()
 {
-	tmpl_profileImage = cvLoadImage(XQTMPLPATH("view_profile.png"), 1);
+	tmpl_profileImage = cvLoadImage(XQTMPLPATH"view_profile.png", 1);
 }
 
 IplImage * cropImage(IplImage * src, int x, int y, int width, int height)

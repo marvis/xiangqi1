@@ -9,7 +9,7 @@ IplImage * tmpl_playImage = 0;
 
 void init()
 {
-	tmpl_playImage = cvLoadImage(XQTMPLPATH("view_play.png"), 1);
+	tmpl_playImage = cvLoadImage(XQTMPLPATH"view_play.png", 1);
 }
 
 IplImage * cropImage(IplImage * src, int x, int y, int width, int height)

@@ -8,7 +8,7 @@ IplImage * tmpl_backImage = 0;
 
 void init()
 {
-	tmpl_backImage = cvLoadImage(XQTMPLPATH("view_back.png"), 1);
+	tmpl_backImage = cvLoadImage(XQTMPLPATH"view_back.png", 1);
 }
 
 IplImage * cropImage(IplImage * src, int x, int y, int width, int height)

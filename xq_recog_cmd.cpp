@@ -61,30 +61,30 @@ bool initTemplChesses()
 {
 	templChesses = new IplImage * [15];
 	int id = 0;
-	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_black_che.png"), 1);
-	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_black_ma.png"), 1);
-	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_black_xiang.png"), 1);
-	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_black_shi.png"), 1);
-	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_black_jiang.png"), 1);
-	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_black_pao.png"), 1);
-	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_black_zu.png"), 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH"xiangqi_black_che.png", 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH"xiangqi_black_ma.png", 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH"xiangqi_black_xiang.png", 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH"xiangqi_black_shi.png", 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH"xiangqi_black_jiang.png", 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH"xiangqi_black_pao.png", 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH"xiangqi_black_zu.png", 1);
 
-	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_red_che.png"), 1);
-	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_red_ma.png"), 1);
-	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_red_xiang.png"), 1);
-	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_red_shi.png"), 1);
-	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_red_jiang.png"), 1);
-	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_red_pao.png"), 1);
-	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_red_zu.png"), 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH"xiangqi_red_che.png", 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH"xiangqi_red_ma.png", 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH"xiangqi_red_xiang.png", 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH"xiangqi_red_shi.png", 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH"xiangqi_red_jiang.png", 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH"xiangqi_red_pao.png", 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH"xiangqi_red_zu.png", 1);
 
-	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_blank.png"), 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH"xiangqi_blank.png", 1);
 
-	blackfromChess = cvLoadImage(XQTMPLPATH("black_move_from_hlf.png"), 1);
-	redfromChess = cvLoadImage(XQTMPLPATH("red_move_from_hlf.png"), 1);
+	blackfromChess = cvLoadImage(XQTMPLPATH"black_move_from_hlf.png", 1);
+	redfromChess = cvLoadImage(XQTMPLPATH"red_move_from_hlf.png", 1);
 
-	blacktoChess = cvLoadImage(XQTMPLPATH("black_move_to_hlf.png"), 1);
-	redtoChess = cvLoadImage(XQTMPLPATH("red_move_to_hlf.png"), 1);
-	masktoChess = cvLoadImage(XQTMPLPATH("mask_move_to_hlf.png"), 1);
+	blacktoChess = cvLoadImage(XQTMPLPATH"black_move_to_hlf.png", 1);
+	redtoChess = cvLoadImage(XQTMPLPATH"red_move_to_hlf.png", 1);
+	masktoChess = cvLoadImage(XQTMPLPATH"mask_move_to_hlf.png", 1);
 
 	if(blackfromChess->width != redfromChess->width || blackfromChess->height != redfromChess->height)
 		cerr<<"black_move_from.png and red_move_from.png have different size"<<endl;
@@ -390,7 +390,7 @@ int main(int argc, char ** argv)
 		return -1;
 	}
 
-	IplImage * bkgImg = cvLoadImage(XQTMPLPATH("background.png"), 1);
+	IplImage * bkgImg = cvLoadImage(XQTMPLPATH"background.png", 1);
 	if(!bkgImg)
 	{
 		printf( "No background.png in current folder");
@@ -427,7 +427,7 @@ int main(int argc, char ** argv)
 	
 	// find red general start
 
-	IplImage * generalImg = cvLoadImage(XQTMPLPATH("red_general.png"), 1);
+	IplImage * generalImg = cvLoadImage(XQTMPLPATH"red_general.png", 1);
 	if(!generalImg)
 	{
 		printf("can't find red_general.png\n");
