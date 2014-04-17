@@ -1,6 +1,7 @@
 #include "opencv/cv.h"
 #include "opencv/highgui.h"
 #include <iostream>
+#include "path.h"
 
 using namespace std;
 using namespace cv;
@@ -8,7 +9,7 @@ IplImage * tmpl_loginImage = 0;
 
 void init()
 {
-	tmpl_loginImage = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/view_login.png", 1);
+	tmpl_loginImage = cvLoadImage(XQTMPLPATH("view_login.png"), 1);
 }
 
 IplImage * cropImage(IplImage * src, int x, int y, int width, int height)

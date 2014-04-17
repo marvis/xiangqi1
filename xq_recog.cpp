@@ -2,7 +2,7 @@
 #include "opencv/highgui.h" //显示图像用的，因为用到了显示图片，所以需要包含进去；
 #include <iostream>
 #include <sstream>
-
+#include "path.h"
 using namespace cv;
 using namespace std;
 #define DOUBLE_INF 1.79e+308
@@ -21,23 +21,23 @@ bool initTemplChesses()
 {
 	templChesses = new IplImage * [15];
 	int id = 0;
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_black_che.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_black_ma.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_black_xiang.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_black_shi.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_black_jiang.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_black_pao.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_black_zu.png", 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_black_che.png"), 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_black_ma.png"), 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_black_xiang.png"), 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_black_shi.png"), 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_black_jiang.png"), 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_black_pao.png"), 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_black_zu.png"), 1);
 
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_red_che.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_red_ma.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_red_xiang.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_red_shi.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_red_jiang.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_red_pao.png", 1);
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_red_zu.png", 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_red_che.png"), 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_red_ma.png"), 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_red_xiang.png"), 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_red_shi.png"), 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_red_jiang.png"), 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_red_pao.png"), 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_red_zu.png"), 1);
 
-	templChesses[id++] = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/xiangqi_blank.png", 1);
+	templChesses[id++] = cvLoadImage(XQTMPLPATH("xiangqi_blank.png"), 1);
 
 	bool isok = true;
 	for(int i = 0; i < 15; i++)
@@ -239,7 +239,7 @@ int main(int argc, char ** argv)
 		return -1;
 	}
 
-	IplImage * bkgImg = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/background.png", 1);
+	IplImage * bkgImg = cvLoadImage(XQTMPLPATH("background.png"), 1);
 	if(!bkgImg)
 	{
 		printf( "No background.png in current folder");
@@ -276,7 +276,7 @@ int main(int argc, char ** argv)
 	
 	// find red general start
 
-	IplImage * generalImg = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/red_general.png", 1);
+	IplImage * generalImg = cvLoadImage(XQTMPLPATH("red_general.png"), 1);
 	if(!generalImg)
 	{
 		printf("can't find red_general.png\n");

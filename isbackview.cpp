@@ -1,14 +1,14 @@
 #include "opencv/cv.h"
 #include "opencv/highgui.h"
 #include <iostream>
-
+#include "path.h"
 using namespace std;
 using namespace cv;
 IplImage * tmpl_backImage = 0;
 
 void init()
 {
-	tmpl_backImage = cvLoadImage("/Users/xiaohang/Test/xiangqi/templates/view_back.png", 1);
+	tmpl_backImage = cvLoadImage(XQTMPLPATH("view_back.png"), 1);
 }
 
 IplImage * cropImage(IplImage * src, int x, int y, int width, int height)

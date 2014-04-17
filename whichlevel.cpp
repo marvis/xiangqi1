@@ -3,6 +3,8 @@
 #include <iostream>
 #include <string>
 #include <cassert>
+#include "path.h"
+
 using namespace std;
 using namespace cv;
 
@@ -61,7 +63,7 @@ int main(int argc, char ** argv)
 	for(int i = 0; i < 9; i++)
 	{
 		char buf[255]; 
-		sprintf(buf, "/Users/xiaohang/Test/xiangqi/templates/level_prepared_%d.png", i+1);
+		sprintf(buf, XQTMPLPATH("level_prepared_%d.png"), i+1);
 		IplImage * tmpImg1 = cvLoadImage(buf, 1);
 		if(!tmpImg1)
 		{
@@ -74,7 +76,7 @@ int main(int argc, char ** argv)
 			min_sumdiff = sumdiff;
 			level = i+1;
 		}
-		sprintf(buf, "/Users/xiaohang/Test/xiangqi/templates/level_nonprepared_%d.png", i+1);
+		sprintf(buf, XQTMPLPATH("level_nonprepared_%d.png"), i+1);
 		//cout<<"\""<<buf<<"\""<<endl;
 		IplImage * tmpImg2 = cvLoadImage(buf, 1);
 		if(!tmpImg2)
