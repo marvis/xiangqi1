@@ -3,7 +3,10 @@
 #include <vector>
 #include <map>
 #include <cassert>
+#include <cstdio>
+#include <cstdlib>
 using namespace std;
+#define ABS(x) ((x) >= 0 ? (x) : -(x))
 bool verbose = 0;
 void fenstr2matrix(string fenstr, string matrix[10][9])
 {
@@ -50,7 +53,13 @@ bool isfenvalid(string fenstr)
 	if(linenum > 2) 
 	{
 		isreverse = true;
-		reverse(fenstr.begin(), fenstr.end());
+		for(int i = 0; i < fenstr.size()/2; i++)
+		{
+			char c = fenstr[i];
+			fenstr[i] = fenstr[fenstr.size() - 1 - i];
+			fenstr[fenstr.size() - 1 - i] = c;
+		}
+		//reverse(fenstr.begin(), fenstr.end()); // cann't compile to android
 	}
 
 	fenstr2matrix(fenstr, matrix);
@@ -109,7 +118,7 @@ bool isfenvalid(string fenstr)
 			if(chess == "BS")
 			{
 				int jj = j;
-				int dist = abs(i-4) + abs(jj-1);
+				int dist = ABS(i-4) + ABS(jj-1);
 				if(dist != 0 && dist != 2)
 				{
 					if(verbose) cerr<<"invalid BS position at ("<<tj<<","<<ti<<")"<<endl;
@@ -119,7 +128,7 @@ bool isfenvalid(string fenstr)
 			if(chess == "RS")
 			{
 				int jj = 9-j;
-				int dist = abs(i-4) + abs(jj-1);
+				int dist = ABS(i-4) + ABS(jj-1);
 				if(dist != 0 && dist != 2) 
 				{
 					if(verbose) cerr<<"invalid RS position at ("<<tj<<","<<ti<<")"<<endl;
@@ -219,7 +228,7 @@ bool isfenvalid(string prev_fenstr, string cur_fenstr)
 		else movechess = cur_matrix[j2][i2];
 		if(movechess == "BZ" || movechess == "RZ")
 		{
-			if(abs(i1-i2) + abs(j1-j2) != 1)
+			if(ABS(i1-i2) + ABS(j1-j2) != 1)
 			{
 				if(verbose) cerr<<"Error Zu move"<<endl;
 				return false;
@@ -235,7 +244,7 @@ bool isfenvalid(string prev_fenstr, string cur_fenstr)
 		}
 		if(movechess == "BM" || movechess == "RM")
 		{
-			if(abs(i1-i2) + abs(j1-j2) != 3 || abs(i1-i2) == 0 || abs(j1-j2) == 0 ) 
+			if(ABS(i1-i2) + ABS(j1-j2) != 3 || ABS(i1-i2) == 0 || ABS(j1-j2) == 0 ) 
 			{
 				if(verbose) cerr<<"Error Ma move"<<endl;
 				return false;
@@ -243,7 +252,7 @@ bool isfenvalid(string prev_fenstr, string cur_fenstr)
 		}
 		if(movechess == "BX" || movechess == "RX")
 		{
-			if(abs(i1-i2) != 2 || abs(j1-j2) != 2)
+			if(ABS(i1-i2) != 2 || ABS(j1-j2) != 2)
 			{
 				if(verbose) cerr<<"Error Xiang move"<<endl;
 				return false;
@@ -251,7 +260,7 @@ bool isfenvalid(string prev_fenstr, string cur_fenstr)
 		}
 		if(movechess == "BS" || movechess == "RS")
 		{
-			if(abs(i1-i2) != 1 && abs(j1-j2) != 1) 
+			if(ABS(i1-i2) != 1 && ABS(j1-j2) != 1) 
 			{
 				if(verbose) cerr<<"Error Shi move"<<endl;
 				return false;

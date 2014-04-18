@@ -1,1 +1,5 @@
 xq_recog : recognize the chessboard from the screen shot
+
+Android compile:
+./android.sh
+make mobile

@@ -16,13 +16,13 @@ do
 		if [ "$isnonoccupy" == "true" ]; then
 			echo "nonoccupy"
 			cp ./screen.png ./screen${fid}_nonoccupy.png; fid=$[fid+1]
-			./adb/touch.sh 194 720
+			./touch.sh 194 720
 			sleep 1
 			continue
 		fi
 
 		# touch the profile image
-		./adb/touch.sh 363 108
+		./touch.sh 363 108
 		sleep 0.1
 
 		adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./ >> /dev/null 2>&1
@@ -30,7 +30,7 @@ do
 		if [ "$isprofile" == "true" ]; then
 			echo "profile view"
 			cp ./screen.png ./screen${fid}_profile.png; fid=$[fid+1]
-			./adb/touch.sh 531 126
+			./touch.sh 531 126
 			sleep 0.1
 		else
 			echo "not profile view"
@@ -41,11 +41,11 @@ do
 		cp ./screen.png ./screen${fid}_level$level.png; fid=$[fid+1]
 		if [ "$level" -le 4 ]; then
 			# touch start
-			./adb/touch.sh 546 720
+			./touch.sh 546 720
 			sleep 1
 		else
 			# change table
-			./adb/touch.sh 194 720
+			./touch.sh 194 720
 			sleep 1
 		fi
 		continue
@@ -55,7 +55,7 @@ do
 	if [ "$isselect" == "true" ]; then
 		echo "select view"
 		cp ./screen.png ./screen${fid}_select.png; fid=$[fid+1]
-		./adb/touch.sh 357 513
+		./touch.sh 357 513
 		sleep 1
 		continue
 	fi
@@ -64,7 +64,7 @@ do
 	if [ "$islogin" == "true" ]; then
 		echo "login view"
 		cp ./screen.png ./screen${fid}_login.png; fid=$[fid+1]
-		./adb/touch.sh 375 879
+		./touch.sh 375 879
 		sleep 1
 		continue
 	fi
@@ -73,7 +73,7 @@ do
 	if [ "$isback" == "true" ]; then
 		echo "back view"
 		cp ./screen.png ./screen${fid}_back.png; fid=$[fid+1]
-		./adb/touch.sh 310 728
+		./touch.sh 310 728
 		sleep 1
 		continue
 	fi
@@ -82,7 +82,7 @@ do
 	if [ "$isconfirm" == "true" ]; then
 		echo "confirm view"
 		cp ./screen.png ./screen${fid}_confirm.png; fid=$[fid+1]
-		./adb/touch.sh 355 776
+		./touch.sh 355 776
 		sleep 1
 		continue
 	fi
@@ -90,7 +90,7 @@ do
 	if [ "$isneterror" == "true" ]; then
 		echo "neterror view"
 		cp ./screen.png ./screen${fid}_neterror.png; fid=$[fid+1]
-		./adb/touch.sh 352 778
+		./touch.sh 352 778
 		sleep 1
 		continue
 	fi

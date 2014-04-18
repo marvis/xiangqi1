@@ -36,3 +36,21 @@ clean:
 	rm xq_recog
 	rm fenstr2matrix
 	rm whichmoves
+mobile:
+	cd android/isloginview/jni && make
+	cd android/isneterrorview/jni && make
+	cd android/isconfirmview/jni && make
+	cd android/ischangingtableview/jni && make
+	cd android/isnonoccupyview/jni && make
+	cd android/whichlevel/jni && make
+	cd android/isprofileview/jni && make
+	cd android/isenterview/jni && make
+	cd android/isplayview/jni && make
+	cd android/isbackview/jni && make
+	cd android/isselectview/jni && make
+	cd android/isprepareview/jni && make
+	cd android/isstartview/jni && make
+	cd android/isfenvalid/jni && make
+	cd android/xq_recog_cmd/jni && make
+	cd android/fenstr2matrix/jni && make
+	cd android/whichmoves/jni && make

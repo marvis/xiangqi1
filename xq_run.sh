@@ -46,7 +46,7 @@ do
 	fi
 	failcount=0
 
-	#clear
+	clear
 	echo "-------------------------------"
 	./fenstr2matrix.sh $fenstr `./whichmoves $prev_fenstr $fenstr`
 	echo "-------------------------------"
@@ -61,15 +61,15 @@ do
 	status=`echo "$nextmove" | awk '{print $5}'`
     prev_fenstr=`echo "$nextmove" | awk '{print $6}'`
 	#echo "start move"
-	./adb/touch.sh $x0 $y0
-	./adb/touch.sh $x1 $y1
+	./touch.sh $x0 $y0
+	./touch.sh $x1 $y1
 
 	if [ "$status" == "1" ]; then
 		echo "game over"
 		break
 	fi
 
-	#clear
+	clear
 	echo "-------------------------------"
 	./fenstr2matrix.sh $prev_fenstr `./whichmoves $fenstr $prev_fenstr`
 	echo "-------------------------------"
