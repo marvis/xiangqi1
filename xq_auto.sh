@@ -23,7 +23,7 @@ do
 
 		# touch the profile image
 		./touch.sh 363 108
-		sleep 0.1
+		sleep 1
 
 		adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./ >> /dev/null 2>&1
 		isprofile=`./isprofileview ./screen.png`
@@ -31,7 +31,7 @@ do
 			echo "profile view"
 			cp ./screen.png ./screen${fid}_profile.png; fid=$[fid+1]
 			./touch.sh 531 126
-			sleep 0.1
+			sleep 1
 		else
 			echo "not profile view"
 			continue

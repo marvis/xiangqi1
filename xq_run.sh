@@ -19,6 +19,16 @@ failcount=0
 while [ 1 ]
 do
 	adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./ >> /dev/null 2>&1
+
+	screen=`./whichscreen.sh ./screen.png`
+	if [[ "$screen" == "startview" || "$screen" == "selectview" || "$screen" == "loginview" || "$screen" == "backview" || "$screen" == "confirmview" || "$screen" == "neterrorview" || "$screen" == "enterview" || "$screen" == "prepareview" || "$screen" == "changingtableview" || "$screen" == "gameoverview" ]]; then
+		echo "$screen exit"
+		break
+	elif [ "$screen" == "unknowview" ]; then
+		echo "$screen continue"
+		continue
+	fi
+
 	result=`xq_recog_cmd screen.png $fid.png`; fid=$[fid+1];
 	fenstr=`echo $result | awk '{print $1}'`
 	if [ "$fenstr" == "$prev_fenstr" ]; then

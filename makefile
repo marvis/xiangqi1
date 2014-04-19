@@ -1,4 +1,5 @@
 all:
+	g++ -o isgameoverview isgameoverview.cpp `pkg-config --cflags --libs opencv`
 	g++ -o isloginview isloginview.cpp `pkg-config --cflags --libs opencv`
 	g++ -o isneterrorview isneterrorview.cpp `pkg-config --cflags --libs opencv`
 	g++ -o isconfirmview isconfirmview.cpp `pkg-config --cflags --libs opencv`
@@ -54,3 +55,15 @@ mobile:
 	cd android/xq_recog_cmd/jni && make
 	cd android/fenstr2matrix/jni && make
 	cd android/whichmoves/jni && make
+pushscript:
+	adb push android/xq_auto.sh /data/local/xiangqi/
+	adb push android/xq_run.sh /data/local/xiangqi/
+	adb push android/am.sh /data/local/xiangqi/
+	adb push android/msg.sh /data/local/xiangqi/
+	adb push android/touch.sh /data/local/xiangqi/
+pullscript:
+	adb pull /data/local/xiangqi/xq_auto.sh android/
+	adb pull /data/local/xiangqi/xq_run.sh android/
+	adb pull /data/local/xiangqi/am.sh android/
+	adb pull /data/local/xiangqi/msg.sh android/
+	adb pull /data/local/xiangqi/touch.sh android/

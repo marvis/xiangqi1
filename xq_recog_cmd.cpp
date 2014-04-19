@@ -422,68 +422,8 @@ int main(int argc, char ** argv)
 	double x_step = 59;
 	double y_step = 65.5;
 
-	int x0 = 33 + 3 * x_step;
-	int y0 = 40;
-	
-	// find red general start
-
-	IplImage * generalImg = cvLoadImage(XQTMPLPATH"red_general.png", 1);
-	if(!generalImg)
-	{
-		printf("can't find red_general.png\n");
-		return -1;
-	}
-
-	int positions[18][2] = {
-		{x0, y0}, {x0+x_step, y0}, {x0 + 2*x_step, y0},
-		{x0, (int)(y0+y_step)}, {x0+x_step, (int)(y0+y_step)}, {x0 + 2*x_step, (int)(y0+y_step)},
-		{x0, (int)(y0+2*y_step)}, {x0+x_step, (int)(y0+2*y_step)}, {x0 + 2*x_step, (int)(y0+2*y_step)},
-
-		{x0, (int)(y0+7*y_step)}, {x0+x_step, (int)(y0+7*y_step)}, {x0 + 2*x_step, (int)(y0+7*y_step)},
-		{x0, (int)(y0+8*y_step)}, {x0+x_step, (int)(y0+8*y_step)}, {x0 + 2*x_step, (int)(y0+8*y_step)},
-		{x0, (int)(y0+9*y_step)}, {x0+x_step, (int)(y0+9*y_step)}, {x0 + 2*x_step, (int)(y0+9*y_step)}
-	};
-
-	double min_score = -1;
-	int min_id = -1;
-	int w0 = 29;
-	int x, y;
-	bool red_is_bot = true;
-	for(int i = 0; i < 18; i++)
-	{
-		x = positions[i][0];
-		y = positions[i][1];
-		IplImage * chessImg = cropImage(image, x - w0, y - w0, 2*w0+1, 2*w0+1);
-		double score = bestMatchingScore(generalImg, chessImg);
-		if(min_score == -1 || score < min_score)
-		{
-			min_score = score;
-			min_id = i;
-		}
-	}
-	if(min_id < 9) 
-	{
-		red_is_bot = false;
-		//cout<<"red is up"<<endl;
-	}
-	else 
-	{
-		//cout<<"red is bot"<<endl;
-		red_is_bot = true;
-	}
-
-	// find red general stop
-	if(red_is_bot)
-	{
-		x0 = 33;
-		y0 = 40;
-	}
-	else
-	{
-		x0 = 35;
-		y0 = 43;
-	}
-	int id = 1;
+	int x0 = 34;
+	int y0 = 41;
 
 	//the font variable    
 	CvFont font;    
@@ -594,8 +534,19 @@ int main(int argc, char ** argv)
 	else if(fenstr == "RNBAKABNR/9/1C5C1/P1P1P1P1P/9/9/p1p1p1p1p/1c5c1/9/rnbakabnr") cout<<" b w";
 	else
 	{
-		if(red_is_bot) cout<<" w";
-		else cout<<" b";
+		// find black king position
+		int linenum = 0;
+		string mycolor = "w";
+		for(int i = 0; i < fenstr.size(); i++) 
+		{
+			if(fenstr[i] == '/') linenum++;
+			if(fenstr[i] == 'k') break;
+		}
+		if(linenum > 2) mycolor = "b";
+
+		// output mycolor
+		cout<<" "<<mycolor;
+		// output who moves
 		if(chessmatrix[toj][toi] >= 'A' && chessmatrix[toj][toi] <= 'Z') cout<<" b";
 		else cout<<" w";
 	}
