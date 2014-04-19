@@ -7,8 +7,8 @@ do
 	if [ `expr $cur_time - $start_time` -ge 28000 ]; then break; fi
 	#rm screen.png
 	adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./ >> /dev/null 2>&1
-	isstart=`./isstartview ./screen.png`
-	if [ "$isstart" == "true" ]; then
+	view=`./whichscreen screen.png`
+	if [ "startview" == "$view" ]; then
 		echo "start view"
 		cp ./screen.png ./screen${fid}_start.png; fid=$[fid+1]
 		
@@ -51,8 +51,7 @@ do
 		continue
 	fi
 
-	isselect=`./isselectview ./screen.png`
-	if [ "$isselect" == "true" ]; then
+	if [ "selectview" == "$view" ]; then
 		echo "select view"
 		cp ./screen.png ./screen${fid}_select.png; fid=$[fid+1]
 		./touch.sh 357 513
@@ -60,8 +59,7 @@ do
 		continue
 	fi
 
-	islogin=`./isloginview ./screen.png`
-	if [ "$islogin" == "true" ]; then
+	if [ "loginview" == "$view" ]; then
 		echo "login view"
 		cp ./screen.png ./screen${fid}_login.png; fid=$[fid+1]
 		./touch.sh 375 879
@@ -69,8 +67,7 @@ do
 		continue
 	fi
 
-	isback=`./isbackview ./screen.png`
-	if [ "$isback" == "true" ]; then
+	if [ "back" == "$view" ]; then
 		echo "back view"
 		cp ./screen.png ./screen${fid}_back.png; fid=$[fid+1]
 		./touch.sh 310 728
@@ -78,16 +75,14 @@ do
 		continue
 	fi
 
-	isconfirm=`./isconfirmview ./screen.png`
-	if [ "$isconfirm" == "true" ]; then
+	if [ "confirmview" == "$view" ]; then
 		echo "confirm view"
 		cp ./screen.png ./screen${fid}_confirm.png; fid=$[fid+1]
 		./touch.sh 355 776
 		sleep 1
 		continue
 	fi
-	isneterror=`./isneterrorview ./screen.png`
-	if [ "$isneterror" == "true" ]; then
+	if [ "neterrorview" == "$view" ]; then
 		echo "neterror view"
 		cp ./screen.png ./screen${fid}_neterror.png; fid=$[fid+1]
 		./touch.sh 352 778
@@ -95,31 +90,27 @@ do
 		continue
 	fi
 
-	isenter=`./isenterview ./screen.png`
-	if [ "$isenter" == "true" ]; then
+	if [ "enterview" == "$view" ]; then
 		echo "enter view"
 		cp ./screen.png ./screen${fid}_enter.png; fid=$[fid+1]
 		sleep 1
 		continue
 	fi
 
-	isgameover=`./isgameoverview ./screen.png`
-	if [ "$isgameover" == "true" ]; then
+	if [ "gameoverview" == "$view" ]; then
 		echo "gameover view"
 		cp ./screen.png ./screen${fid}_gameover.png; fid=$[fid+1]
 		sleep 1
 		continue
 	fi
-	isprepare=`./isprepareview ./screen.png`
-	if [ "$isprepare" == "true" ]; then
+	if [ "prepareview" == "$view" ]; then
 		echo "prepare view"
 		cp ./screen.png ./screen${fid}_prepare.png; fid=$[fid+1]
 		sleep 1
 		continue
 	fi
 
-	ischangingtable=`./ischangingtableview ./screen.png`
-	if [ "$ischangingtable" == "true" ]; then
+	if [ "changingtableview" == "$view" ]; then
 		echo "changing table view"
 		cp ./screen.png ./screen${fid}_changingtable.png; fid=$[fid+1]
 		sleep 1
@@ -127,8 +118,7 @@ do
 	fi
 	
 	# isplay should be the last checked
-	isplay=`./isplayview ./screen.png`
-	if [ "$isplay" == "true" ]; then
+	if [ "playview" == "$view" ]; then
 		echo "start play2"
 		cp ./screen.png ./screen${fid}_play.png; fid=$[fid+1]
 		./xq_run.sh
