@@ -1,8 +1,8 @@
 # step1: check the start fenstr
-#rm *.png
+rm play*.png
 fid=1
 adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./ >> /dev/null 2>&1
-result=`xq_recog_cmd screen.png $fid.png`; fid=$[fid+1];
+result=`xq_recog_cmd screen.png play$fid.png`; fid=$[fid+1];
 fenstr=`echo $result | awk '{print $1}'`
 mycolor=`echo $result | awk '{print $2}'`
 whonext=`echo $result | awk '{print $3}'`
@@ -29,7 +29,7 @@ do
 		continue
 	fi
 
-	result=`xq_recog_cmd screen.png $fid.png`; fid=$[fid+1];
+	result=`xq_recog_cmd screen.png play$fid.png`; fid=$[fid+1];
 	fenstr=`echo $result | awk '{print $1}'`
 	if [ "$fenstr" == "$prev_fenstr" ]; then
 		#echo "对方没有动作"

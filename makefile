@@ -1,4 +1,5 @@
 all:
+	g++ -o whichscreen whichscreen.cpp `pkg-config --cflags --libs opencv`
 	g++ -o isgameoverview isgameoverview.cpp `pkg-config --cflags --libs opencv`
 	g++ -o isloginview isloginview.cpp `pkg-config --cflags --libs opencv`
 	g++ -o isneterrorview isneterrorview.cpp `pkg-config --cflags --libs opencv`
@@ -19,6 +20,7 @@ all:
 	g++ -o fenstr2matrix fenstr2matrix.cpp
 	g++ -o whichmoves whichmoves.cpp
 clean:
+	rm isgameoverview
 	rm isloginview
 	rm isneterrorview
 	rm isconfirmview
@@ -38,6 +40,7 @@ clean:
 	rm fenstr2matrix
 	rm whichmoves
 mobile:
+	cd android/isgameoverview/jni && make
 	cd android/isloginview/jni && make
 	cd android/isneterrorview/jni && make
 	cd android/isconfirmview/jni && make

@@ -103,6 +103,13 @@ do
 		continue
 	fi
 
+	isgameover=`./isgameoverview ./screen.png`
+	if [ "$isgameover" == "true" ]; then
+		echo "gameover view"
+		cp ./screen.png ./screen${fid}_gameover.png; fid=$[fid+1]
+		sleep 1
+		continue
+	fi
 	isprepare=`./isprepareview ./screen.png`
 	if [ "$isprepare" == "true" ]; then
 		echo "prepare view"
