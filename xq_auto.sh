@@ -39,7 +39,7 @@ do
 		level=`./whichlevel ./screen.png`
 		echo "level = $level"
 		cp ./screen.png ./screen${fid}_level$level.png; fid=$[fid+1]
-		if [ "$level" -le 4 ]; then
+		if [ "$level" -le 9 ]; then
 			# touch start
 			./touch.sh 546 720
 			sleep 1
