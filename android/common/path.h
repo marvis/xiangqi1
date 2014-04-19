@@ -1,1 +1,1 @@
-#define XQTMPLPATH "/data/local/xiangqi/templates"
+#define XQTMPLPATH "/data/local/xiangqi/templates/"
