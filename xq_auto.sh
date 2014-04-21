@@ -8,6 +8,7 @@ do
 	#rm screen.png
 	adb shell screencap /storage/sdcard0/screen.png && adb pull /storage/sdcard0/screen.png ./ >> /dev/null 2>&1
 	view=`./whichscreen screen.png`
+	echo "view = $view"
 	if [ "startview" == "$view" ]; then
 		echo "start view"
 		cp ./screen.png ./screen${fid}_start.png; fid=$[fid+1]
@@ -67,7 +68,7 @@ do
 		continue
 	fi
 
-	if [ "back" == "$view" ]; then
+	if [ "backview" == "$view" ]; then
 		echo "back view"
 		cp ./screen.png ./screen${fid}_back.png; fid=$[fid+1]
 		./touch.sh 310 728
@@ -119,11 +120,18 @@ do
 	
 	# isplay should be the last checked
 	if [ "playview" == "$view" ]; then
-		echo "start play2"
+		echo "start play"
 		cp ./screen.png ./screen${fid}_play.png; fid=$[fid+1]
 		./xq_run.sh
 		continue
 	fi
+
+	if [ "flappybirdview" == "$view" ]; then
+		echo "exit"
+		cp ./screen.png ./screen${fid}_flappybird.png; fid=$[fid+1]
+		exit
+	fi
+
 	echo "unknown view"
 	cp ./screen.png ./screen${fid}_unknow.png; fid=$[fid+1]
 done

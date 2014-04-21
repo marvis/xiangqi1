@@ -1,4 +1,4 @@
-for i in current_time whichscreen isgameoverview isloginview isneterrorview ischangingtableview isnonoccupyview whichlevel isprofileview isenterview isplayview isbackview isselectview isprepareview isstartview isfenvalid xq_recog_cmd fenstr2matrix isconfirmview whichmoves
+for i in current_time whichscreen whichlevel isnonoccupyview isprofileview isfenvalid xq_recog_cmd fenstr2matrix whichmoves
 do
 	mkdir -p android/$i/jni
 	cp android/common/Application.mk android/$i/jni/

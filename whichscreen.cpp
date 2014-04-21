@@ -6,12 +6,12 @@ using namespace std;
 using namespace cv;
 #define VIEWNUM 12
 
-enum {STARTVIEW = 0, SELECTVIEW, LOGINVIEW, BACKVIEW, CONFIRMVIEW, NETERRORVIEW, ENTERVIEW1, ENTERVIEW2, PREPAREVIEW, CHANGINGTABLEVIEW, GAMEOVERVIEW, PLAYVIEW};
+enum {STARTVIEW = 0, SELECTVIEW, LOGINVIEW, BACKVIEW, CONFIRMVIEW, NETERRORVIEW, ENTERVIEW, PREPAREVIEW, CHANGINGTABLEVIEW, GAMEOVERVIEW, PLAYVIEW, FLAPPYBIRDVIEW};
 
 string view_paths[VIEWNUM];
 CvRect rects[VIEWNUM];
 
-string viewnames[] = {"startview", "selectview", "loginview", "backview", "confirmview", "neterrorview", "enterview1", "enterview2", "prepareview", "changingtableview", "gameoverview", "playview"};
+string viewnames[] = {"startview", "selectview", "loginview", "backview", "confirmview", "neterrorview", "enterview", "prepareview", "changingtableview", "gameoverview", "playview", "flappybirdview"};
 
 IplImage * cropImage(IplImage * src, int x, int y, int width, int height)
 {
@@ -42,11 +42,8 @@ void init()
 	view_paths[id] = XQTMPLPATH"view_neterror.png"; 
 	rects[id++] = cvRect(308, 730, 96, 90);
 
-	view_paths[id] = XQTMPLPATH"view_enter1.png"; 
-	rects[id++] = cvRect(204, 445, 299, 58);
-
-	view_paths[id] = XQTMPLPATH"view_enter2.png"; 
-	rects[id++] = cvRect(122, 701, 128, 37);
+	view_paths[id] = XQTMPLPATH"view_enter.png"; 
+	rects[id++] = cvRect(63, 564, 42, 95);
 
 	view_paths[id] = XQTMPLPATH"view_prepare.png"; 
 	rects[id++] = cvRect(288, 803, 150, 89);
@@ -59,6 +56,9 @@ void init()
 
 	view_paths[id] = XQTMPLPATH"view_play.png"; 
 	rects[id++] = cvRect(26, 84, 64, 79);
+
+	view_paths[id] = XQTMPLPATH"view_flappybird.png"; 
+	rects[id++] = cvRect(305, 380, 55, 90);
 }
 
 bool isView(IplImage * image, int id)

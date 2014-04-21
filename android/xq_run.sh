@@ -16,17 +16,18 @@ failcount=0
 #echo "=== start move ==="
 
 #step2: start play
+lasttime=`./current_time`
 while [ 1 ]
 do
 	/system/bin/screencap screen.png
-	screen=`./whichscreen.sh ./screen.png`
+	screen=`./whichscreen ./screen.png`
 	if [[ "$screen" == "startview" || "$screen" == "selectview" || "$screen" == "loginview" || "$screen" == "backview" || "$screen" == "confirmview" || "$screen" == "neterrorview" || "$screen" == "enterview" || "$screen" == "prepareview" || "$screen" == "changingtableview" || "$screen" == "gameoverview" ]]; then
 		echo "$screen exit"
-		./msg.sh "$screen exit"
+		#./msg.sh "$screen exit"
 		break
 	elif [ "$screen" == "unknowview" ]; then
 		echo "$screen continue"
-		./msg.sh "$screen continue"
+		#./msg.sh "$screen continue"
 		continue
 	fi
 
@@ -36,15 +37,15 @@ do
 	if [ "$fenstr" == "$prev_fenstr" ]; then
 		echo "no moves"
 		#./msg.sh "no moves"
-		sleep 0.2
+		#sleep 0.2
 		continue
 	fi
 
 	isvalid1=`./isfenvalid $fenstr`
 	if [ "$isvalid1" == "false" ]; then 
 		echo "fenstr is valid"
-		./msg.sh "fenstr is valid"
-		sleep 0.2
+		#./msg.sh "fenstr is valid"
+		#sleep 0.2
 		failcount=$[failcount+1]
 		if [ $failcount -ge 4 ]; then break; fi
 		continue; 
@@ -53,18 +54,19 @@ do
 	isvalid2=`./isfenvalid $prev_fenstr $fenstr`
 	if [ "$isvalid2" == "false" ]; then
 		echo "fenstr is not from prev_fenstr"
-		./msg.sh "fenstr is not from prev_fenstr"
-		sleep 0.2
+		#./msg.sh "fenstr is not from prev_fenstr"
+		#sleep 0.2
 		failcount=$[failcount+1]
 		if [ $failcount -ge 4 ]; then break; fi
 		continue;
 	fi
 	failcount=0
 
-	#clear
+	clear
 	echo "-------------------------------"
 	./fenstr2matrix.sh $fenstr `./whichmoves $prev_fenstr $fenstr`
 	echo "-------------------------------"
+	curtime=`./current_time`; echo "time lapsed: `expr $curtime - $lasttime`"; lasttime=$curtime;
 
 	nextmove=`node xqwizard_interface/xqcli.js -v -f "$fenstr $mycolor"`
 	#echo $nextmove
@@ -81,14 +83,15 @@ do
 
 	if [ "$status" == "1" ]; then
 		echo "game over"
-		./msg.sh "game over"
+		#./msg.sh "game over"
 		break
 	fi
 
-	#clear
+	clear
 	echo "-------------------------------"
 	./fenstr2matrix.sh $prev_fenstr `./whichmoves $fenstr $prev_fenstr`
 	echo "-------------------------------"
+	curtime=`./current_time`; echo "time lapsed: `expr $curtime - $lasttime`"; lasttime=$curtime;
 
-	sleep 0.2
+	#sleep 0.2
 done

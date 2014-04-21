@@ -8,8 +8,8 @@ do
 	if [ `expr $cur_time - $start_time` -ge 28000 ]; then break; fi
 	#rm screen.png
 	/system/bin/screencap screen.png
-	isstart=`./isstartview ./screen.png`
-	if [ "$isstart" == "true" ]; then
+	view=`./whichscreen screen.png`
+	if [ "startview" == "$view" ]; then
 		echo "start view"
 		./msg.sh "start view"
 		#cp ./screen.png ./screen${fid}_start.png; fid=$[fid+1]
@@ -59,8 +59,7 @@ do
 		continue
 	fi
 
-	isselect=`./isselectview ./screen.png`
-	if [ "$isselect" == "true" ]; then
+	if [ "selectview" == "$view" ]; then
 		echo "select view"
 		./msg.sh "select view"
 		#cp ./screen.png ./screen${fid}_select.png; fid=$[fid+1]
@@ -69,8 +68,7 @@ do
 		continue
 	fi
 
-	islogin=`./isloginview ./screen.png`
-	if [ "$islogin" == "true" ]; then
+	if [ "loginview" == "$view" ]; then
 		echo "login view"
 		./msg.sh "login view"
 		#cp ./screen.png ./screen${fid}_login.png; fid=$[fid+1]
@@ -79,8 +77,7 @@ do
 		continue
 	fi
 
-	isback=`./isbackview ./screen.png`
-	if [ "$isback" == "true" ]; then
+	if [ "backview" == "$view" ]; then
 		echo "back view"
 		./msg.sh "back view"
 		#cp ./screen.png ./screen${fid}_back.png; fid=$[fid+1]
@@ -89,8 +86,7 @@ do
 		continue
 	fi
 
-	isconfirm=`./isconfirmview ./screen.png`
-	if [ "$isconfirm" == "true" ]; then
+	if [ "confirmview" == "$view" ]; then
 		echo "confirm view"
 		./msg.sh "confirm view"
 		#cp ./screen.png ./screen${fid}_confirm.png; fid=$[fid+1]
@@ -98,8 +94,7 @@ do
 		sleep 1
 		continue
 	fi
-	isneterror=`./isneterrorview ./screen.png`
-	if [ "$isneterror" == "true" ]; then
+	if [ "neterrorview" == "$view" ]; then
 		echo "neterror view"
 		./msg.sh "neterror view"
 		#cp ./screen.png ./screen${fid}_neterror.png; fid=$[fid+1]
@@ -108,8 +103,7 @@ do
 		continue
 	fi
 
-	isenter=`./isenterview ./screen.png`
-	if [ "$isenter" == "true" ]; then
+	if [[ "enterview1" == "$view" || "enterview2" == "$view" ]]; then
 		echo "enter view"
 		./msg.sh "enter view"
 		#cp ./screen.png ./screen${fid}_enter.png; fid=$[fid+1]
@@ -117,17 +111,15 @@ do
 		continue
 	fi
 	
-	isgameover=`./isgameoverview ./screen.png`
-    	if [ "$isgameover" == "true" ]; then
-            echo "gameover view"
-            ./msg.sh "gameover view"
-            #cp ./screen.png ./screen${fid}_gameover.png; fid=$[fid+1]
-            sleep 1
-            continue
-        fi	
+	if [ "gameoverview" == "$view" ]; then
+		echo "gameover view"
+		./msg.sh "gameover view"
+		#cp ./screen.png ./screen${fid}_gameover.png; fid=$[fid+1]
+		sleep 1
+		continue
+	fi	
 
-	isprepare=`./isprepareview ./screen.png`
-	if [ "$isprepare" == "true" ]; then
+	if [ "prepareview" == "$view" ]; then
 		echo "prepare view"
 		./msg.sh "prepare view"
 		#cp ./screen.png ./screen${fid}_prepare.png; fid=$[fid+1]
@@ -135,8 +127,7 @@ do
 		continue
 	fi
 
-	ischangingtable=`./ischangingtableview ./screen.png`
-	if [ "$ischangingtable" == "true" ]; then
+	if [ "changingtableview" == "$view" ]; then
 		echo "changing table view"
 		./msg.sh "changing table view"
 		#cp ./screen.png ./screen${fid}_changingtable.png; fid=$[fid+1]
@@ -145,10 +136,9 @@ do
 	fi
 	
 	# isplay should be the last checked
-	isplay=`./isplayview ./screen.png`
-	if [ "$isplay" == "true" ]; then
-		echo "start play2"
-		./msg.sh "start play2"
+	if [ "playview" == "$view" ]; then
+		echo "start play"
+		./msg.sh "start play"
 		#cp ./screen.png ./screen${fid}_play.png; fid=$[fid+1]
 		./xq_run.sh
 		continue
